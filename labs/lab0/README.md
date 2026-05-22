@@ -35,7 +35,7 @@ This screenshot shows successful installation and version verification of git, n
 
 ## Private Repository
 
-![Private Repository](screenshots/part2-private-repo.png)
+![Private Repository](screenshots/repo.png)
 
 This screenshot shows my private GitHub repository.
 
