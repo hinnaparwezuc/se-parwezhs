@@ -19,7 +19,7 @@ Repository URL: [se-parwezhs](https://github.com/hinnaparwezuc/se-parwezhs)
 
 ## Azure Subscription
 
-![Azure Subscription](screenshots/Azure Subscription.png)
+![Azure Subscription](screenshots/Azure%20Subscription.png)
 
 This screenshot shows my Azure for Students subscription and available student credits.
 
