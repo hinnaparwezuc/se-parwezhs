@@ -13,9 +13,9 @@ Email: [parwezhs@mail.uc.edu](mailto:parwezhs@mail.uc.edu)
 
 This lab focused on developing and deploying a real-time messenger application using Node.js, Express, Socket.io, GitHub Actions, and Microsoft Azure App Service. The application was implemented by completing the Send Message and Receive Message use cases from the provided software skeleton. Security enhancements were then applied by implementing DOMPurify output sanitization and a Content Security Policy (CSP) to defend against Cross-Site Scripting (XSS) attacks.
 
-Repository URL: https://github.com/hinnaparwezc/se-parwezhs
+**Repository URL:** https://github.com/hinnaparwezc/se-parwezhs
 
-Azure App Service URL: https://YOUR-AZURE-APP.azurewebsites.net
+**Azure App Service URL:** *(Replace with your Azure App Service URL.)*
 
 ---
 
