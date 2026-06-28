@@ -1,0 +1,24 @@
+{
+  "name": "se-parwezhs",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/hinnaparwezuc/se-parwezhs#readme",
+  "bugs": {
+    "url": "https://github.com/hinnaparwezuc/se-parwezhs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hinnaparwezuc/se-parwezhs.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "socket.io": "^4.8.3"
+  }
+}
