@@ -1,5 +1,6 @@
-<img src="headshot.jpeg" alt="Headshot" width="120" align="right">
-
+<p align="right">
+  <img src="headshot.jpeg" alt="Headshot" width="120">
+</p>
 # EECE/CS 3093C – Software Engineering
 
 ## Instructor
