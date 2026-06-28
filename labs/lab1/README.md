@@ -135,5 +135,3 @@ This screenshot shows the browser DevTools Network tab displaying the configured
 
 ## GitHub Commit
 Task 5 Commit URL: https://github.com/hinnaparwezuc/se-parwezhs/commit/6e47327754ae921fbc8e00d9e4eb251385828edb
-
-Task 5 Commit URL:
