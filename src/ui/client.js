@@ -2,32 +2,38 @@
  * EECE/CS 3093C Software Engineering — Lab 1
  * client.js — code skeleton provided by Dr. Phu Phung
  * Code complete implementation by Hinna Parwez
- * ===============================================================================
+ * =============================================================================
  */
-var socket = io(); //connect to the Socket.io Server
-socket.on("connect", () => { //connected to the server
+
+var socket = io(); // connect to the Socket.io server
+
+socket.on("connect", () => {
   console.log(`Connected to Socket.io server:
     ${socket.io.opts.hostname}, port: ${socket.io.opts.port}`);
 });
 
-/**
- * code blocks below have been implemented in Lecture 8
- */
 // UI DOM references
 var sendBtnElm = document.getElementById('send-button');
-if(!sendBtnElm) {
-    console.log("Error in getting 'send-button' button");
+var chatMessageInput = document.getElementById('chat-message');
+
+if (!sendBtnElm) {
+  console.log("Error in getting 'send-button' button");
 }
-// AC-01.2 (UI): Send button click triggers sendMessage()
+
+if (!chatMessageInput) {
+  console.log('Error in getting "chat-message" input');
+}
+
+// Send button click triggers sendMessage()
 sendBtnElm.addEventListener('click', sendMessage);
 
-var chatMessageInput = document.getElementById('chat-message');
-if(!chatMessageInput) {
-    console.log('Error in getting "chat-message" input');
-}
-// AC-01.2 (UI): pressing Enter also triggers sendMessage()
+// Pressing Enter also triggers sendMessage()
 chatMessageInput.addEventListener('keypress', function(e) {
-  if (e.key === 'Enter') sendMessage();
+  socket.emit('typing');
+
+  if (e.key === 'Enter') {
+    sendMessage();
+  }
 });
 
 // =============================================================================
@@ -35,21 +41,46 @@ chatMessageInput.addEventListener('keypress', function(e) {
 // =============================================================================
 
 function sendMessage() {
-    var message = chatMessageInput.value.trim();
-    if (!message) return;   // AC-02.2: empty messages are ignored
-    console.log(`Debug>Chat message: ${message}`); //for UI testing only
-    // other AC will be implemented
-    chatMessageInput.value = ''; // AC-01.5: clear input after sending
-    chatMessageInput.focus();
+  var message = chatMessageInput.value.trim();
+
+  if (!message) return; // empty messages are ignored
+
+  console.log(`Debug>Chat message: ${message}`);
+
+  socket.emit("message", message);
+
+  chatMessageInput.value = '';
+  chatMessageInput.focus();
 }
 
 // =============================================================================
-// Use-Case-02: Receive message 
+// Use-Case-02: Receive Message
 // =============================================================================
 
-//TODO: code to implement AC-02.1: display incoming chat messages without page refresh
+socket.on("message", (data) => {
+  displayMessage(data);
+});
 
+function displayMessage(data) {
+  var responseElm = document.getElementById("chat-responses");
+  var d = document.createElement("div");
+  var timestamp = new Date().toLocaleTimeString();
 
-//TODO: code to implement AC-02.1: display system status events (join/leave) in the status area
-// AC-02.2: shows timestamp for each message
-// AC-02.3 (UI): auto-scroll to the latest message
+  d.innerHTML = '<span style="color: #2431e5">[' + timestamp + ']</span> '
+    + DOMPurify.sanitize(data);
+
+  responseElm.appendChild(d);
+  responseElm.scrollTop = responseElm.scrollHeight;
+}
+
+// Display system status events
+socket.on("status", (data) => {
+  var statusElm = document.getElementById("system-status");
+  var timestamp = new Date().toLocaleTimeString();
+
+  statusElm.innerHTML = statusElm.innerHTML +
+    '<br><span style="color: #2ee524">[' + timestamp + ']</span> ' +
+    DOMPurify.sanitize(data);
+
+  statusElm.scrollTop = statusElm.scrollHeight;
+});
