@@ -1,5 +1,6 @@
-# EECE/CS 3093C – Software Engineering
 <img src="headshot.jpeg" alt="Headshot" width="120" align="right">
+
+# EECE/CS 3093C – Software Engineering
 
 ## Instructor
 
@@ -7,8 +8,8 @@ Dr. Phu Phung
 
 ## Student
 
-**Hinna Parwez**
-**Email:** [parwezhs@mail.uc.edu](mailto:parwezhs@mail.uc.edu)
+**Hinna Parwez**  
+**Email:** parwezhs@mail.uc.edu
 
 ## GitHub Repository
 
@@ -16,8 +17,7 @@ https://github.com/hinnaparwezc/se-parwezhs
 
 ## Azure App Service
 
-**URL:** https://YOUR-AZURE-APP.azurewebsites.net
-
+https://YOUR-APP.azurewebsites.net
 ---
 
 # Overview
