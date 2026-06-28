@@ -1,7 +1,9 @@
 # EECE/CS 3093C – Software Engineering
 
-![Headshot](headshot.jpeg)
-
+<p align="center">
+  <img src="headshot.jpeg" alt="Headshot" width="150"><br>
+  <strong>Hinna Parwez</strong>
+</p>
 ## Instructor
 
 Dr. Phu Phung
