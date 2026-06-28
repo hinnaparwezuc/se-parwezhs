@@ -1,146 +1,138 @@
 # EECE/CS 3093C – Software Engineering
 
-<img src="headshot.jpeg" alt="Headshot" width="120" align="right">
-
 ## Instructor
 
 Dr. Phu Phung
 
 ## Student
 
-**Hinna Parwez**  
-**Email:** parwezhs@mail.uc.edu
+Hinna Parwez
+Email: [parwezhs@mail.uc.edu](mailto:parwezhs@mail.uc.edu)
 
-## GitHub Repository
+## Overview
 
-https://github.com/hinnaparwezc/se-parwezhs
+This lab focused on developing and deploying a real-time messenger application using Node.js, Express, Socket.io, GitHub Actions, and Microsoft Azure App Service. The application was implemented by completing the Send Message and Receive Message use cases from the provided software skeleton. Security enhancements were then applied by implementing DOMPurify output sanitization and a Content Security Policy (CSP) to defend against Cross-Site Scripting (XSS) attacks.
+
+Repository URL: https://github.com/hinnaparwezc/se-parwezhs
+
+Azure App Service URL: https://YOUR-AZURE-APP.azurewebsites.net
+
+---
+
+# Task 1 – Git Branch, Node.js Application Setup and Testing
+
+## Local Application Running
+
+![Local Application](YOUR_TASK1_SCREENSHOT.png)
+
+This screenshot shows the messenger application successfully running in Google Cloud Shell after installing the required dependencies and executing the application.
+
+## GitHub Commit
+
+Task 1 Commit URL:
+
+---
+
+# Task 2 – Azure Deployment and GitHub Actions
 
 ## Azure App Service
 
-https://YOUR-APP.azurewebsites.net
+![Azure App Service](YOUR_TASK2A_SCREENSHOT.png)
+
+This screenshot shows the messenger application successfully deployed to Microsoft Azure App Service.
+
+## GitHub Actions Workflow
+
+![GitHub Actions](YOUR_TASK2B_SCREENSHOT.png)
+
+This screenshot shows the successful GitHub Actions workflow used to automatically deploy the application.
+
+## Live Azure Application
+
+![Live Azure Application](YOUR_TASK2C_SCREENSHOT.png)
+
+This screenshot shows the messenger application running successfully from the Azure deployment.
 
 ---
 
-# Overview
+# Task 3 – Send Message Implementation
 
-This lab focused on developing and deploying a real-time messenger application using Node.js, Express, Socket.io, GitHub Actions, and Microsoft Azure App Service. The application was extended by implementing the Send Message and Receive Message use cases, including timestamps and connection status notifications. Finally, secure software development practices were applied by implementing DOMPurify output sanitization and a Content Security Policy (CSP) to defend against Cross-Site Scripting (XSS) attacks.
+## Client Implementation
 
----
+![Client Implementation](YOUR_TASK3A_SCREENSHOT.png)
 
-# Task 1 – Git Branch, Node.js Web Application Setup and Testing
+This screenshot shows the implementation of the `sendMessage()` function inside `client.js`.
 
-## 1a. Local Application Running
+## Server Implementation
 
-![Task 1a](YOUR_TASK1_SCREENSHOT.png)
+![Server Implementation](YOUR_TASK3B_SCREENSHOT.png)
 
-**Figure 1.** The messenger application running locally in Google Cloud Shell after executing `npm start`.
+This screenshot shows the server-side Socket.io message broadcast implementation inside `server.js`.
 
-## 1b. GitHub Commit
+## Application Demonstration
 
-Commit URL:
+![Application Demonstration](YOUR_TASK3C_SCREENSHOT.png)
 
----
+This screenshot demonstrates two connected browser windows successfully exchanging chat messages.
 
-# Task 2 – CI/CD Pipeline and Azure Deployment
+## GitHub Commit
 
-## 2a. Azure App Service
-
-![Task 2a](YOUR_TASK2A_SCREENSHOT.png)
-
-**Figure 2a.** Azure App Service showing the deployed messenger application.
-
-## 2b. GitHub Actions
-
-![Task 2b](YOUR_TASK2B_SCREENSHOT.png)
-
-**Figure 2b.** Successful GitHub Actions workflow deploying the application.
-
-## 2c. Live Azure Application
-
-![Task 2c](YOUR_TASK2C_SCREENSHOT.png)
-
-**Figure 2c.** Messenger application successfully running on Azure.
+Task 3 Commit URL:
 
 ---
 
-# Task 3 – Use Case 01: Send Message
+# Task 4 – Receive Message Implementation
 
-## 3a. Client Implementation
+## Client Message Listener
 
-![Task 3a](YOUR_TASK3A_SCREENSHOT.png)
+![Client Listener](YOUR_TASK4A_SCREENSHOT.png)
 
-**Figure 3a.** Implementation of the `sendMessage()` function in `client.js`.
+This screenshot shows the client-side implementation for receiving chat messages and displaying timestamps.
 
-## 3b. Server Implementation
+## Server Status Events
 
-![Task 3b](YOUR_TASK3B_SCREENSHOT.png)
+![Server Status](YOUR_TASK4B_SCREENSHOT.png)
 
-**Figure 3b.** Server-side implementation of the message broadcast handler.
+This screenshot shows the server implementation for user connection and disconnection status notifications.
 
-## 3c. Application Demonstration
+## Application Demonstration
 
-![Task 3c](YOUR_TASK3C_SCREENSHOT.png)
+![Receive Message Demo](YOUR_TASK4C_SCREENSHOT.png)
 
-**Figure 3c.** Two browser windows demonstrating successful message broadcasting between connected users.
+This screenshot demonstrates timestamped chat messages together with join and leave status notifications.
 
-## 3d. GitHub Commit
+## GitHub Commit
 
-Commit URL:
-
----
-
-# Task 4 – Use Case 02: Receive Message
-
-## 4a. Client Implementation
-
-![Task 4a](YOUR_TASK4A_SCREENSHOT.png)
-
-**Figure 4a.** Client-side implementation of chat message and status event handling.
-
-## 4b. Server Implementation
-
-![Task 4b](YOUR_TASK4B_SCREENSHOT.png)
-
-**Figure 4b.** Server implementation of user connection and disconnection notifications.
-
-## 4c. Application Demonstration
-
-![Task 4c](YOUR_TASK4C_SCREENSHOT.png)
-
-**Figure 4c.** Chat messages with timestamps and join/leave notifications displayed in the messenger interface.
-
-## 4d. GitHub Commit
-
-Commit URL:
+Task 4 Commit URL:
 
 ---
 
-# Task 5 – SSDLC and Defense-in-Depth
+# Task 5 – SSDLC and Security Implementation
 
-## 5a. GitHub Issue Update
+## GitHub Issue Update
 
-![Task 5a](YOUR_TASK5A_SCREENSHOT.png)
+![GitHub Issue](YOUR_TASK5A_SCREENSHOT.png)
 
-**Figure 5a.** GitHub Issue updated with the new security user story and security acceptance criteria before implementing the security fixes.
+This screenshot shows the GitHub Issue updated with the additional security user stories and acceptance criteria before implementation.
 
-## 5b. XSS Demonstration Before the Fix
+## XSS Attack Before the Fix
 
-![Task 5b](YOUR_TASK5B_SCREENSHOT.png)
+![Before Fix](YOUR_TASK5B_SCREENSHOT.png)
 
-**Figure 5b.** Before implementing the security protetions, the injected XSS payload successfully executed in the victim browser.
+This screenshot demonstrates the successful Cross-Site Scripting (XSS) attack before implementing the security protections.
 
-## 5c. XSS Demonstration After the Fix
+## XSS Attack After the Fix
 
-![Task 5c](picture1.png)
+![After Fix](picture1.png)
 
-**Figure 5c.** After implementing DOMPurify output sanitization, the injected XSS payload no longer executes. The malicious HTML is sanitized and no JavaScript alert appears in either browser tab.
+This screenshot demonstrates that the malicious payload is sanitized by DOMPurify and no JavaScript alert executes after the security implementation.
 
-## 5d. Content Security Policy
+## Content Security Policy
 
-![Task 5d](picture2.png)
+![CSP Header](picture2.png)
 
-**Figure 5d.** Browser DevTools showing the `Content-Security-Policy` response header returned by the server.
+This screenshot shows the browser DevTools Network tab displaying the configured `Content-Security-Policy` response header.
 
-## 5e. GitHub Commit
+## GitHub Commit
 
-Commit URL:
+Task 5 Commit URL:
