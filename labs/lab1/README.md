@@ -1,7 +1,6 @@
-<p align="right">
-  <img src="headshot.jpeg" alt="Headshot" width="120">
-</p>
 # EECE/CS 3093C – Software Engineering
+
+<img src="headshot.jpeg" alt="Headshot" width="120" align="right">
 
 ## Instructor
 
@@ -19,6 +18,7 @@ https://github.com/hinnaparwezc/se-parwezhs
 ## Azure App Service
 
 https://YOUR-APP.azurewebsites.net
+
 ---
 
 # Overview
