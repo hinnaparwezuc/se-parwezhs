@@ -24,7 +24,7 @@ This lab focused on developing and deploying a real-time messenger application u
 
 ## Local Application Running
 
-![Local Application](serverrunning.png)
+![Local Application](screenshots/serverrunning.png)
 
 This screenshot shows the messenger application successfully running in Google Cloud Shell after installing the required dependencies and executing the application.
 
@@ -38,19 +38,19 @@ Task 1 Commit URL:
 
 ## Azure App Service
 
-![Azure App Service](azureapp.png)
+![Azure App Service](screenshots/azureapp.png)
 
 This screenshot shows the messenger application successfully deployed to Microsoft Azure App Service.
 
 ## GitHub Actions Workflow
 
-![GitHub Actions](YOUR_TASK2B_SCREENSHOT.png)
+![GitHub Actions](screenshots/githubactions.png)
 
 This screenshot shows the successful GitHub Actions workflow used to automatically deploy the application.
 
 ## Live Azure Application
 
-![Live Azure Application](liveazure.png)
+![Live Azure Application](screenshots/liveazure.png)
 
 This screenshot shows the messenger application running successfully from the Azure deployment.
 
@@ -60,19 +60,19 @@ This screenshot shows the messenger application running successfully from the Az
 
 ## Client Implementation
 
-![Client Implementation](YOUR_TASK3A_SCREENSHOT.png)
+![Client Implementation](screenshots/clientimplementation.png)
 
 This screenshot shows the implementation of the `sendMessage()` function inside `client.js`.
 
 ## Server Implementation
 
-![Server Implementation](YOUR_TASK3B_SCREENSHOT.png)
+![Server Implementation](screenshots/serverimplementation.png)
 
 This screenshot shows the server-side Socket.io message broadcast implementation inside `server.js`.
 
 ## Application Demonstration
 
-![Application Demonstration](YOUR_TASK3C_SCREENSHOT.png)
+![Application Demonstration](screenshots/applicationdemo.png)
 
 This screenshot demonstrates two connected browser windows successfully exchanging chat messages.
 
@@ -86,19 +86,19 @@ Task 3 Commit URL:
 
 ## Client Message Listener
 
-![Client Listener](YOUR_TASK4A_SCREENSHOT.png)
+![Client Listener](screenshots/clientlistener.png)
 
 This screenshot shows the client-side implementation for receiving chat messages and displaying timestamps.
 
 ## Server Status Events
 
-![Server Status](YOUR_TASK4B_SCREENSHOT.png)
+![Server Status](screenshots/serverstatus.png)
 
 This screenshot shows the server implementation for user connection and disconnection status notifications.
 
 ## Application Demonstration
 
-![Receive Message Demo](YOUR_TASK4C_SCREENSHOT.png)
+![Receive Message Demo](screenshots/applicationdemo.png)
 
 This screenshot demonstrates timestamped chat messages together with join and leave status notifications.
 
@@ -112,25 +112,25 @@ Task 4 Commit URL:
 
 ## GitHub Issue Update
 
-![GitHub Issue](YOUR_TASK5A_SCREENSHOT.png)
+![GitHub Issue](screenshots/githubissues.png)
 
 This screenshot shows the GitHub Issue updated with the additional security user stories and acceptance criteria before implementation.
 
 ## XSS Attack Before the Fix
 
-![Before Fix](YOUR_TASK5B_SCREENSHOT.png)
+![Before Fix](screenshots/attack.png)
 
 This screenshot demonstrates the successful Cross-Site Scripting (XSS) attack before implementing the security protections.
 
 ## XSS Attack After the Fix
 
-![After Fix](picture1.png)
+![After Fix](screenshots/network.png)
 
 This screenshot demonstrates that the malicious payload is sanitized by DOMPurify and no JavaScript alert executes after the security implementation.
 
 ## Content Security Policy
 
-![CSP Header](picture2.png)
+![CSP Header](screenshots/network.png)
 
 This screenshot shows the browser DevTools Network tab displaying the configured `Content-Security-Policy` response header.
 
