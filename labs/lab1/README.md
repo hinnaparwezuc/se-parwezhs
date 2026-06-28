@@ -7,6 +7,7 @@ Dr. Phu Phung
 ## Student
 
 Hinna Parwez
+
 Email: [parwezhs@mail.uc.edu](mailto:parwezhs@mail.uc.edu)
 
 ## Overview
@@ -15,7 +16,7 @@ This lab focused on developing and deploying a real-time messenger application u
 
 **Repository URL:** https://github.com/hinnaparwezc/se-parwezhs
 
-**Azure App Service URL:** *(Replace with your Azure App Service URL.)*
+**Azure App Service URL:** https://lab1-rg-faetgzcufva6fdgy.canadacentral-01.azurewebsites.net
 
 ---
 
@@ -23,7 +24,7 @@ This lab focused on developing and deploying a real-time messenger application u
 
 ## Local Application Running
 
-![Local Application](YOUR_TASK1_SCREENSHOT.png)
+![Local Application](serverrunning.png)
 
 This screenshot shows the messenger application successfully running in Google Cloud Shell after installing the required dependencies and executing the application.
 
@@ -37,7 +38,7 @@ Task 1 Commit URL:
 
 ## Azure App Service
 
-![Azure App Service](YOUR_TASK2A_SCREENSHOT.png)
+![Azure App Service](azureapp.png)
 
 This screenshot shows the messenger application successfully deployed to Microsoft Azure App Service.
 
@@ -49,7 +50,7 @@ This screenshot shows the successful GitHub Actions workflow used to automatical
 
 ## Live Azure Application
 
-![Live Azure Application](YOUR_TASK2C_SCREENSHOT.png)
+![Live Azure Application](liveazure.png)
 
 This screenshot shows the messenger application running successfully from the Azure deployment.
 
