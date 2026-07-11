@@ -30,10 +30,8 @@ server.listen(PORT, () => {
   console.log('Server running on port ' + PORT);
 });
 
-// =============================================================================
 // Use-Case-03: Join Chat
 // Temporary hard-coded credential store for Lab 2
-// =============================================================================
 
 const users = [
   { username: 'hinna', password: 'Pass1234' },
