@@ -28,6 +28,26 @@ var passwordInput = document.getElementById('password');
 var joinButton = document.getElementById('join-button');
 var loginError = document.getElementById('login-error');
 
+var registerUI = document.getElementById('registerUI');
+
+var showRegisterButton =
+    document.getElementById('show-register-button');
+
+var showLoginButton =
+    document.getElementById('show-login-button');
+
+var registerButton =
+    document.getElementById('register-button');
+
+var registerUsername =
+    document.getElementById('register-username');
+
+var registerPassword =
+    document.getElementById('register-password');
+
+var registerError =
+    document.getElementById('register-error');
+
 var loggedInUser = document.getElementById('logged-in-user');
 var userListElm = document.getElementById('user-list');
 var logoutButton = document.getElementById('logout-button');
@@ -37,6 +57,55 @@ var chatMessageInput = document.getElementById('chat-message');
 var chatResponses = document.getElementById('chat-responses');
 var systemStatus = document.getElementById('system-status');
 
+// Use-Case-05 Register Account
+
+showRegisterButton.addEventListener('click', function () {
+   loginUI.style.display = 'none';
+   registerUI.style.display = 'block';
+   registerError.textContent = '';
+});
+
+showLoginButton.addEventListener('click', function () {
+   registerUI.style.display = 'none';
+   loginUI.style.display = 'block';
+   registerError.textContent = '';
+});
+
+registerButton.addEventListener('click', function () {
+   var username = registerUsername.value.trim();
+   var password = registerPassword.value;
+
+   registerError.textContent = '';
+
+   if (!username || !password) {
+ 	registerError.textContent =
+	  'Username and Password are required.';
+	return;
+   }
+
+   socket.emit('register', {
+	username: username,
+	password: password
+   });
+});
+
+socket.on('register-success', function (username) {
+   registerError.textContent =
+	'Account created successfully for ' + username + '.';
+
+   registerUsername.value = '';
+   registerPassword.value = '';
+
+   setTimeout(function () {
+	registerUI.style.display = 'none';
+	loginUI.style.display = 'block';
+	registerError.textContent = '';
+   }, 1000);
+});
+
+socket.on('register-error', function (message) {
+	registerError.textContent = message;
+});
 // Use-Case-03 Join Chat
 
 joinButton.addEventListener('click', joinChat);
