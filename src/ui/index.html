@@ -31,9 +31,50 @@
   />
 
   <button id="join-button">Join Chat</button>
+  
+  <button id="show-register-button">
+      Register Account
+  </button>
 
   <p id="login-error"></p>
+
+  </div>
+
+<!-- Hidden until Register Account is clicked -->
+<div id="registerUI" style="display: none;">
+
+    <h2>Register Account</h2>
+
+    Username:
+    <input
+        id="register-username"
+        type="text"
+        placeholder="Username"
+    />
+
+    <br><br>
+
+    Password:
+    <input
+        id="register-password"
+        type="password"
+        placeholder="Password"
+    />
+
+    <br><br>
+
+    <button id="register-button">
+        Register
+    </button>
+
+    <button id="show-login-button">
+        Back to Login
+    </button>
+
+    <p id="register-error"></p>
+
 </div>
+
 
 <!-- Hidden until login succeeds -->
 <div id="chatUI" style="display: none;">

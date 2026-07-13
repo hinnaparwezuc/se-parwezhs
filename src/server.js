@@ -95,6 +95,76 @@ io.on('connection', (socket) => {
   socket.authenticated = false;
   socket.username = null;
 
+  // Use-Case-05: Register Account
+  socket.on('register', async (credentials) => {
+
+    console.log(
+        'Debug> Register request received from socket: ' +
+        socket.id
+    );
+
+    if (
+        !credentials ||
+        typeof credentials !== 'object' ||
+        typeof credentials.username !== 'string' ||
+        typeof credentials.password !== 'string'
+    ) {
+        socket.emit(
+            'register-error',
+            'Invalid registration request.'
+        );
+        return;
+    }
+
+    const username = credentials.username.trim();
+ const password = credentials.password;
+
+    const usernamePattern = /^\w{3,20}$/;
+    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
+
+    if (!usernamePattern.test(username)) {
+        socket.emit(
+            'register-error',
+            'Username must be 3-20 characters (letters, numbers, underscore).'
+        );
+        return;
+    }
+
+    if (!passwordPattern.test(password)) {
+        socket.emit(
+            'register-error',
+            'Password must be at least 6 characters with letters and numbers.'
+        );
+        return;
+    }
+
+    let result;
+
+    try {
+        result = await messengerdb.register(username, password);
+    } catch (err) {
+        socket.emit(
+            'register-error',
+            'Server error. Please try again.'
+        );
+        return;
+    }
+
+    if (!result.success) {
+        socket.emit(
+            'register-error',
+            result.message
+        );
+        return;
+    }
+
+    socket.emit(
+        'register-success',
+        username
+    );
+});
+
+
   // Use-Case-03: Join Chat
 
   socket.on('join', async (credentials) => {
