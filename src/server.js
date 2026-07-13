@@ -1,5 +1,5 @@
 // =============================================================================
-// EECE/CS 3093C Software Engineering — Lab 1
+// EECE/CS 3093C Software Engineering — Lab 2
 // server.js — code skeleton provided by Phu Phung
 // complete implementation by Hinna Parwez
 // =============================================================================
@@ -10,13 +10,15 @@ const path       = require('path');
 
 const app    = express();
 const server = http.createServer(app);
+const messengerdb = require('./messengerdb');
 const io     = new Server(server);
 
-// AC-02.6 (Security): CSP header — browser-level defense-in-depth
+// Browser security header retained from Lab 1
 app.use((req, res, next) => {
   res.setHeader(
     'Content-Security-Policy',
-    "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; connect-src 'self' https://cdnjs.cloudflare.com"
+    "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; " +
+    "style-src 'self' 'unsafe-inline'; connect-src 'self'"
   );
   next();
 });
@@ -24,34 +26,231 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, 'ui')));
 
 const PORT = process.env.PORT || 8080;
-server.listen(PORT, () => console.log('Server running on port ' + PORT));
 
-// In-memory store: socketId → username
+(async () => {
+  try {
+    await messengerdb.connect();
+
+    server.listen(PORT, () => {
+      console.log('Server running on port ' + PORT);
+    });
+  } catch (err) {
+    console.log(
+      'Error>server.js: failed to start — database connection error',
+      err
+    );
+
+    process.exit(1);
+  }
+})();
+
+// Stores only authenticated users:
+// socket ID username
 const userlist = new Map();
 
+// Use-Case-04: Authorize User
+
+function authorizeUser(socket) {
+  if (!socket || socket.authenticated !== true) {
+    console.log('Connection has not been authenticated');
+    return false;
+  }
+
+  return true;
+}
+
+// Send an event only to authenticated clients
+function sendToAuthenticatedClients(event, data) {
+  userlist.forEach((username, socketId) => {
+    const authenticatedSocket = io.sockets.sockets.get(socketId);
+
+    if (
+      authenticatedSocket &&
+      authorizeUser(authenticatedSocket)
+    ) {
+      authenticatedSocket.emit(event, data);
+    }
+  });
+}
+
+// Send the updated authenticated user list
+function sendUserList() {
+  const authenticatedUsers = Array.from(userlist.values());
+
+  sendToAuthenticatedClients(
+    'user-list',
+    authenticatedUsers
+  );
+}
+
+// Socket.io connection
+
 io.on('connection', (socket) => {
-  const username = 'User_' + socket.id.slice(-5);
-  userlist.set(socket.id, username);
+  console.log(
+    'New client connected - socket ID: ' +
+    socket.id
+  );
 
-  console.log('New client connected - socket ID: ' + socket.id);
+  // Every new connection starts unauthenticated
+  socket.authenticated = false;
+  socket.username = null;
 
-  io.emit('status', username + ' joined the chat');
+  // Use-Case-03: Join Chat
+
+  socket.on('join', async (credentials) => {
+    console.log(
+      'Debug> Join request received from socket: ' +
+      socket.id
+    );
+
+    // AC-03.2: validate JSON payload structure
+    if (
+      !credentials ||
+      typeof credentials !== 'object' ||
+      typeof credentials.username !== 'string' ||
+      typeof credentials.password !== 'string'
+    ) {
+      socket.emit(
+        'join-error',
+        'Invalid login request.'
+      );
+      return;
+    }
+
+    const username = credentials.username.trim();
+    const password = credentials.password;
+
+    if (!username || !password) {
+      socket.emit(
+        'join-error',
+        'Username and password are required.'
+      );
+      return;
+    }
+
+    // AC-03.3: look up submitted credentials in MongoDB
+   let matchingUser;
+
+     try {
+      matchingUser = await messengerdb.find(username, password);
+     } catch (err) {
+       console.error(
+        'Error>server.js: database lookup failed',
+        err
+     );
+
+      socket.emit(
+        'join-error',
+        'Unable to process login request.'
+     );
+
+       return;
+     }
+
+    // AC-03.4: generic error for invalid credentials
+    if (!matchingUser) {
+      console.log(
+        'Debug> Invalid credentials for socket: ' +
+        socket.id
+      );
+
+      socket.emit(
+        'join-error',
+        'Invalid username or password.'
+      );
+      return;
+    }
+
+    // AC-03.5: establish authenticated state
+    socket.authenticated = true;
+    socket.username = matchingUser.username;
+
+    userlist.set(
+      socket.id,
+      matchingUser.username
+    );
+
+    console.log(
+      'Debug> User authenticated: ' +
+      matchingUser.username
+    );
+
+    // AC-03.6: tell this client login succeeded
+    socket.emit('join-success', {
+      username: matchingUser.username
+    });
+
+    // AC-03.7: notify authenticated users
+    sendToAuthenticatedClients(
+      'status',
+      matchingUser.username +
+      ' joined the chat. Number of connected clients: ' +
+      userlist.size
+    );
+
+    sendUserList();
+  });
+
+  // Use-Case-01: Send Message
 
   socket.on('message', (data) => {
-    if (typeof data !== 'string' || data.trim() === '') return;
+    console.log(
+      'Debug> received a chat message: ' +
+      data
+    );
 
-    io.emit('message', username + ': ' + data.trim());
+    // Include UC-04: Authorize User
+    if (!authorizeUser(socket)) {
+      socket.emit('not-authorized');
+      return;
+    }
+
+    // Ignore invalid or empty messages
+    if (
+      typeof data !== 'string' ||
+      data.trim() === ''
+    ) {
+      return;
+    }
+
+    const sender = userlist.get(socket.id);
+
+    console.log(
+      'Debug> "' +
+      sender +
+      '" sent: ' +
+      data.trim()
+    );
+
+    // Send only to authenticated clients
+    sendToAuthenticatedClients(
+      'message',
+      sender + ' says: ' + data.trim()
+    );
   });
-socket.on('typing', () => {
-  socket.broadcast.emit('status', username + ' is typing...');
-  console.log(username + ' is typing...');
-});
+
+  // Disconnect
+  
   socket.on('disconnect', () => {
     const username = userlist.get(socket.id);
+
     userlist.delete(socket.id);
 
-    console.log('Client disconnected - socket ID: ' + socket.id);
+    console.log(
+      'Client disconnected - socket ID: ' +
+      socket.id
+    );
 
-    io.emit('status', username + ' left the chat');
+    // Only announce users who had authenticated
+    if (username) {
+      sendToAuthenticatedClients(
+        'status',
+        username +
+        ' left the chat. Number of connected clients: ' +
+        userlist.size
+      );
+
+      sendUserList();
+    }
   });
 });
