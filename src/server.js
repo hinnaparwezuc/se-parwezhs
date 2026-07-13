@@ -10,6 +10,7 @@ const path       = require('path');
 
 const app    = express();
 const server = http.createServer(app);
+const messengerdb = require('./messengerdb');
 const io     = new Server(server);
 
 // Browser security header retained from Lab 1
@@ -26,18 +27,22 @@ app.use(express.static(path.join(__dirname, 'ui')));
 
 const PORT = process.env.PORT || 8080;
 
-server.listen(PORT, () => {
-  console.log('Server running on port ' + PORT);
-});
+(async () => {
+  try {
+    await messengerdb.connect();
 
-// Use-Case-03: Join Chat
-// Temporary hard-coded credential store for Lab 2
+    server.listen(PORT, () => {
+      console.log('Server running on port ' + PORT);
+    });
+  } catch (err) {
+    console.log(
+      'Error>server.js: failed to start — database connection error',
+      err
+    );
 
-const users = [
-  { username: 'hinna', password: 'Pass1234' },
-  { username: 'alex', password: 'Pass5678' },
-  { username: 'test', password: 'Pass9012' }
-];
+    process.exit(1);
+  }
+})();
 
 // Stores only authenticated users:
 // socket ID username
@@ -92,7 +97,7 @@ io.on('connection', (socket) => {
 
   // Use-Case-03: Join Chat
 
-  socket.on('join', (credentials) => {
+  socket.on('join', async (credentials) => {
     console.log(
       'Debug> Join request received from socket: ' +
       socket.id
@@ -123,13 +128,24 @@ io.on('connection', (socket) => {
       return;
     }
 
-    // AC-03.3: look up submitted credentials
-    const matchingUser = users.find((user) => {
-      return (
-        user.username === username &&
-        user.password === password
-      );
-    });
+    // AC-03.3: look up submitted credentials in MongoDB
+   let matchingUser;
+
+     try {
+      matchingUser = await messengerdb.find(username, password);
+     } catch (err) {
+       console.error(
+        'Error>server.js: database lookup failed',
+        err
+     );
+
+      socket.emit(
+        'join-error',
+        'Unable to process login request.'
+     );
+
+       return;
+     }
 
     // AC-03.4: generic error for invalid credentials
     if (!matchingUser) {
